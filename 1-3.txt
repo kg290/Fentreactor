@@ -1,0 +1,326 @@
+Lab Assignment 1
+1.
+Display Calander of year 2025 . CODE-
+student@admin-ka-iMac ~ % cal January 2025
+Su
+Mo
+Tu
+We
+Th
+Fr
+Sa
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20 21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+2.
+Display the system’s date. CODE-
+student@admin-ka-iMac ~ % date Tue Jan 21 12:16:03 IST 2025
+3.
+Count the number of lines in the /etc/passwd file. CODE-
+student@admin-ka-iMac ~ % wc -l /etc/passwd 120 /etc/passwd
+4.
+Find out who else is on the system. CODE-
+student@admin-ka-iMac ~ % who student console Jan 21 12:03
+student ttys000 Jan 21 12:04
+5.
+Direct the output of the man pages for the date command to a file named mydate.
+CODE-
+student@admin-ka-iMac ~ % man date > mydate
+6.
+Create a subdirectory called mydir. CODE-
+student@admin-ka-iMac ~ % mkdir mydir
+7.
+Move the file mydate into the new subdirectory. CODE-
+student@admin-ka-iMac ~ % mv mydate mydir
+8.
+Go to the subdirectory mydir and copy the file mydate to a new file called ourdate
+CODE-
+student@admin-ka-iMac mydir % cp mydate ourdate
+9.
+List the contents of mydir. CODE-
+student@admin-ka-iMac ~ % ls mydir capitals capitals3 ourdate capitals.txt list subdir
+capitals1 mydate
+capitals2 mydir
+10.
+Do a long listing on the file ourdate and note the permissions. CODE-
+student@admin-ka-iMac ~ % ls -l ourdate
+-rw-r--r--@ 1 student staff 12418 Jan 20 10:32 ourdate
+11.
+Display the name of the current directory starting from the root. CODE-
+student@admin-ka-iMac mydir % pwd
+/Users/student/mydir
+12.
+Move the files in the directory mydir back to your home directory. CODE-
+student@admin-ka-iMac ~ % mv mydir/* ~/
+13.
+Display the first 5 lines of mydate. CODE-
+student@admin-ka-iMac ~ % head -n 5 mydate hello1
+hello2 hello3 hello4 hello5
+14.
+Display the last 8 lines of mydate. CODE-
+student@admin-ka-iMac ~ % tail -n 8 mydate hello3
+hello4 hello5 hello6 hello7 hello8 hello99 hello100
+15.
+Remove the directory mydir. CODE-
+student@admin-ka-iMac ~ % rmdir mydir
+16.
+Redirect the output of the long listing of files to a file named list. CODE-
+student@admin-ka-iMac ~ % ls -l >list
+17.
+Select any 5 capitals of states in India and enter them in a file named capitals1. Choose 5 more capitals and enter them in a file named capitals2. Choose 5 more capitals and enter them in a file named capitals3. Concatenate all 3 files and redirect the output to a file named capitals.
+CODE-
+student@admin-ka-iMac ~ % cat > capitals1 maharashtra
+gujaarat goa
+tamil nadu bihar
+student@admin-ka-iMac ~ % cat > capitals2 uttarpradesh
+madhyapradesh mizoram
+assam
+west bengal
+student@admin-ka-iMac ~ % cat > capitals3 telangana
+jammu & kashmir rajasthan uttarakhand
+delhi
+student@admin-ka-iMac ~ % cat capitals1 capitals2 capitals3 > capitals
+student@admin-ka-iMac ~ % cat capitals maharashtra
+gujarat goa
+tamil nadu bihar uttarpradesh
+madhyapradesh mizoram
+assam
+west bengal telangana
+jammu & kashmir
+rajasthan uttarakhand delhi uttarpradesh
+madhyapradesh mizoram
+assam
+west bengal
+18.
+Concatenate the file capitals2 at the end of file capitals. CODE-
+student@admin-ka-iMac ~ % cat capitals2 >> capitals Maharashtra
+gujarat goa
+tamil nadu bihar uttarpradesh
+madhyapradesh mizoram
+assam
+west bengal telangana
+jammu & kashmir rajasthan uttrakhand
+delhi
+19.
+Give read and write permissions to all users for the file capitals. CODE-
+student@admin-ka-iMac ~ % chmod 600 capitals student@admin-ka-iMac ~ % ls -l capitals
+-rw------- 1 student staff 195 Jan 20 13:20 capitals
+20.
+Give read permissions only to the owner of the file capitals. Open the file, make some changes and try to save it. What happens ?
+CODE-
+student@admin-ka-iMac ~ % chmod u+r capitals student@admin-ka-iMac ~ % ls -l capitals
+-rw------- 1 student staff 195 Jan 20 13:20 capitals student@admin-ka-iMac ~ % cat > capitals helloworld
+student@admin-ka-iMac ~ % cat capitals helloworld
+21.
+Create an alias to concatenate the 3 files capitals1, capitals2, capitals3 and redirect the output to a file named capitals. Activate the alias and make it run.
+CODE-
+student@admin-ka-iMac ~ % alias newcapitals ='cat capitals1 capitals2 capitals3'
+student@admin-ka-iMac ~ % newcapitals maharastra
+gujarat goa
+tamil nadu bihar uttarpradesh
+madhyapradesh mizoram
+assam
+west bengal telangana
+jammu & kashmir rajasthan uttrakhand
+delhi uttarpradesh madhyapradesh
+mizoram assam
+west Bengal
+22.
+Find out the number of times the string “the” appears in the file mydate. CODE-
+student@admin-ka-iMac ~ % grep -o 'the' mydate | wc -l 0
+23.
+Find out the line numbers on which the string “date” exists in mydate. CODE-
+student@admin-ka-iMac ~ % grep -n "date" mydate
+24.
+Print all lines of mydate except those that have the letter “i” in them. CODE-
+student@admin-ka-iMac ~ % grep -v "i" mydate hello1
+hello2 hello3 hello4 hello5 hello6 hello7 hello8 hello99 hello100
+25.
+List the words of 4 letters from the file mydate. CODE-
+student@admin-ka-iMac ~ % grep -o'\b[a-zA-Z]\{4\}b' mydate
+26.
+List 5 states in north east India in a file mystates. List their corresponding capitals in a file mycapitals. Use the paste command to join the 2 files.
+CODE-
+student@admin-ka-iMac ~ % cat > mystates assam
+arunachal pradesh manipur meghalaya nagaland
+student@admin-ka-iMac ~ % cat > mycapital dispur
+itanagar kohima shillong imphal
+student@admin-ka-iMac ~ % paste mystates mycapital assam dispur
+arunachal pradesh itanagar manipur kohima meghalayashillong
+nagaland imphal
+27.
+Use the cut command to print the 1 st and 3 rd columns of the /etc/passwd file for all students in this class.
+CODE-
+student@admin-ka-iMac ~ % cut -d: -f1,3 /etc/passwd ##
+# User Database #
+# Note that this file is consulted directly only when the system is running
+# in single-user mode. At other times this information is provided by
+# Open Directory. #
+# See the opendirectoryd(8) man page for additional information about
+# Open Directory. ##
+nobody:-2 root:0 daemon:1
+_uucp:4
+_taskgated:13
+_networkd:24
+_installassistant:25
+_lp:26
+_postfix:27
+_scsd:31
+_ces:32
+_appstore:33
+_mcxalr:54
+_appleevents:55
+_geod:56
+_devdocs:59
+_sandbox:60
+_mdnsresponder:65
+_ard:67
+_www:70
+_eppc:71
+_cvs:72
+_svn:73
+_mysql:74
+_sshd:75
+_qtss:76
+_cyrus:77
+_mailman:78
+_appserver:79
+_clamav:82
+_amavisd:83
+_jabber:84
+_appowner:87
+_windowserver:88
+_spotlight:89
+_tokend:91
+_securityagent:92
+_calendar:93
+_teamsserver:94
+_update_sharing:95
+_installer:96
+_atsserver:97
+_ftp:98
+_unknown:99
+_softwareupdate:200
+_coreaudiod:202
+_screensaver:203
+_locationd:205
+_trustevaluationagent:208
+_timezone:210
+_lda:211
+_cvmsroot:212
+_usbmuxd:213
+_dovecot:214
+_dpaudio:215
+_postgres:216
+_krbtgt:217
+_kadmin_admin:218
+_kadmin_changepw:219
+_devicemgr:220
+_webauthserver:221
+_netbios:222
+_warmd:224
+_dovenull:227
+_netstatistics:228
+_avbdeviced:229
+_krb_krbtgt:230
+_krb_kadmin:231
+_krb_changepw:232
+_krb_kerberos:233
+_krb_anonymous:234
+_assetcache:235
+_coremediaiod:236
+_launchservicesd:239
+_iconservices:240
+_distnote:241
+_nsurlsessiond:242
+_displaypolicyd:244
+_astris:245
+_krbfast:246
+_gamecontrollerd:247
+_mbsetupuser:248
+_ondemand:249
+_xserverdocs:251
+_wwwproxy:252
+_mobileasset:253
+_findmydevice:254
+_datadetectors:257
+_captiveagent:258
+_ctkd:259
+_applepay:260
+_hidd:261
+_cmiodalassistants:262
+_analyticsd:263
+_fpsd:265
+_timed:266
+_nearbyd:268
+_reportmemoryexception:269
+_driverkit:270
+_diskimagesiod:271
+_logd:272
+_appinstalld:273
+_installcoordinationd:274
+_demod:275
+_rmd:277
+_fud:278
+_knowledgegraphd:279
+_coreml:280
+_trustd:282
+_oahd:441
+28.
+Count the number of people logged in and also trap the users in a file using the tee command.
+CODE-
+student@admin-ka-iMac ~ % who | tee users.txt | wc -l 2
+29.
+Convert the contents of mystates into uppercase. CODE-
+student@admin-ka-iMac ~ % tr 'a-z' 'A-Z' < mystates ASSAM
+ARUNACHAL PRADESH MANIPUR
+MEGHALAYA NAGALAND
+30.
+Create any two files & display the common values between them. CODE-
+student@admin-ka-iMac ~ % cat > file1 blue
+red green cyan
+student@admin-ka-iMac ~ % cat > file2 black
+white green
+cyan
+student@admin-ka-iMac ~ % comm file1 file2 black
+blue red green cyan
+white green cyan
+OS_Lab Assignment 3 -Shell Script
+Name- Karnajeet GosaviRollno- 71PRNno- 12311431DIV- SY_CS_BWrite a shell script to check number entered by the user is greater than 10.
+Write a shell script to check if a file exists. If not, then create it.
+Write a shell script that takes two command line arguments. Check whether the name passed as first argument is of a directory or not. If not ,create directory using name passed as second argument.
+Write a shell script which checks the total arguments passed. If the argument count is greater than 5, then display message “Too many arguments”
+Write a shell script to check arguments passed at command line is whether of a file or directory.
+Write a shell script to read a month name from the user. Check if the name entered is either August or October.
+Write a shell script to check whether file or directory exists.
+Write a shell script to check whether file is exists and file is readable.
+Write a shell script to check if the present month is August or not. Use date command to get present month.
+Write a shell script to check if the current user is root or regular user.
+Write a shell script to check the total arguments passed at command line. If the arguments are more than 3 then list the argument else print “type more next time”

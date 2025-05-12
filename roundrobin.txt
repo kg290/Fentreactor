@@ -1,0 +1,103 @@
+#include <stdio.h>
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sortByArrival(int id[], int at[], int bt[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (at[j] > at[j + 1]) {
+                swap(&id[j], &id[j + 1]);
+                swap(&at[j], &at[j + 1]);
+                swap(&bt[j], &bt[j + 1]);
+            }
+        }
+    }
+}
+
+void findAvgTime(int id[], int at[], int bt[], int n, int quantum) {
+    int wt[n], tat[n], rt[n], t = 0, remaining = n;
+    int ganttChart[1000], timeStamps[1000], ganttIndex = 0; // To store Gantt Chart info
+
+    for (int i = 0; i < n; i++) {
+        rt[i] = bt[i];
+        wt[i] = 0;
+    }
+
+    while (remaining > 0) {
+        int executed = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (rt[i] > 0 && at[i] <= t) { 
+                executed = 1;
+
+                ganttChart[ganttIndex] = id[i];  // Store process ID for Gantt Chart
+                timeStamps[ganttIndex++] = t;    // Store time before execution
+
+                if (rt[i] > quantum) {
+                    t += quantum;
+                    rt[i] -= quantum;
+                } else {
+                    t += rt[i];
+                    wt[i] = t - at[i] - bt[i];
+                    rt[i] = 0;
+                    remaining--;
+                }
+            }
+        }
+
+        if (!executed) { 
+            t++;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        tat[i] = bt[i] + wt[i];
+    }
+
+    printf("\nPN\tAT\tBT\tWT\tTAT\n");
+    float total_wt = 0, total_tat = 0;
+    for (int i = 0; i < n; i++) {
+        total_wt += wt[i];
+        total_tat += tat[i];
+        printf("P%d\t%d\t%d\t%d\t%d\n", id[i], at[i], bt[i], wt[i], tat[i]);
+    }
+
+    printf("Average Waiting Time = %.2f\n", total_wt / n);
+    printf("Average Turnaround Time = %.2f\n", total_tat / n);
+
+    // Print Gantt Chart
+    printf("\nGantt Chart:\n");
+    for (int i = 0; i < ganttIndex; i++) {
+        printf("| P%d ", ganttChart[i]);
+    }
+    printf("|\n");
+
+    for (int i = 0; i < ganttIndex; i++) {
+        printf("%d\t", timeStamps[i]);
+    }
+    printf("%d\n", t);  // Print the last timestamp (final execution time)
+}
+
+int main() {
+    int n, quantum;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    int id[n], at[n], bt[n];
+    for (int i = 0; i < n; i++) {
+        id[i] = i + 1;
+        printf("Enter Arrival Time and Burst Time for P%d: ", i + 1);
+        scanf("%d %d", &at[i], &bt[i]);
+    }
+
+    printf("Enter Time Quantum: ");
+    scanf("%d", &quantum);
+    sortByArrival(id, at, bt, n);
+    findAvgTime(id, at, bt, n, quantum);
+
+    return 0;
+}

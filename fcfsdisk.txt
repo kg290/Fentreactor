@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 200
+
+int main()
+{
+    int thm, disk_req[MAX], n, head;
+    printf("Enter total disk Request: ");
+    scanf("%d",&n);
+    printf("Enter request sequence: \n");
+    for(int i = 0 ; i<n ; i++)
+    {
+        printf("%d: ",i+1);
+        scanf("%d",&disk_req[i]);
+    }
+    printf("Enter Head: ");
+    scanf("%d",&head);
+    printf("Disk scheduling sequence is : ");
+    for(int i = 0 ; i<n ; i++)
+    {
+        thm+= abs(head - disk_req[i]);
+        head = disk_req[i];
+        printf("%d ",head);
+    }
+
+    printf("\n");
+    printf("Total head movement : %d",thm);
+}

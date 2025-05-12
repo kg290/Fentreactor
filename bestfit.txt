@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+int main() {
+    int i, j, nb, np, smallest, bestFitIndex;
+    int b[5], p[5], bn[5] = {0}, bf[5] = {0}, frag[5] = {0};
+
+    printf("Enter the number of blocks: ");
+    scanf("%d", &nb);
+    printf("Enter the number of processes: ");
+    scanf("%d", &np);
+    printf("Enter the size of each block:\n");
+    
+    for (i = 0; i < nb; i++) {
+        printf("Block %d size: ", i + 1);
+        scanf("%d", &b[i]);
+    }
+
+    printf("Enter the size of each process:\n");
+    
+    for (i = 0; i < np; i++) {
+        printf("Process %d size: ", i + 1);
+        scanf("%d", &p[i]);
+    }
+
+    for (i = 0; i < np; i++) {
+        for (j = 0; j < nb; j++) {
+            if (bf[j] == 0 && b[j] >= p[i]) {
+                int currentFrag = b[j] - p[i];
+                if (currentFrag < smallest) {
+                    smallest = currentFrag;
+                    bestFitIndex = j;
+                }
+            }
+        }
+        
+        if (bestFitIndex != -1) {
+            bn[i] = bestFitIndex;
+        } else {
+            bn[i] = -1;
+            frag[i] = -1;
+        }
+    }
+
+    printf("\nprocess_no\tprocess_size\tblock_no\tblock_size\tfrag\n");
+
+    for (i = 0; i < np; i++) {
+        if (bn[i] != -1) {
+            printf("%d\t\t%d\t\t%d\t\t%d\t\t%d\n", i + 1, p[i], bn[i] + 1, b[bn[i]], frag[i]);
+        } else {
+            printf("%d\t\t%d\t\tNot Allocated\t-\t\t-\n", i + 1, p[i]);
+        }
+    }
+
+    return 0;
+}

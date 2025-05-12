@@ -1,0 +1,30 @@
+#include <stdio.h>
+#define MAX_PAGES 10 // Max number of pages
+int main() {
+int numberOfPages; int pageSize;
+int pageTable[MAX_PAGES]; int logicalAddress;
+int pageNumber, frameNumber, offset, physicalAddress;
+// Get the number of pages and page size from the user printf("Enter the number of pages (max %d): ", MAX_PAGES); scanf("%d", &numberOfPages);
+// Make sure the number of pages doesn't exceed the maximum if (numberOfPages > MAX_PAGES) {
+printf("Error: Number of pages exceeds the limit.\n"); return 1;
+}
+printf("Enter the page size : "); scanf("%d", &pageSize);
+// Get the frame numbers for each page in the page table printf("Enter the frame number for each page:\n");
+for (int i = 0; i < numberOfPages; i++) { printf("Page %d -> Frame: ", i); scanf("%d", &pageTable[i]);
+}
+// Get the logical address from the user printf("Enter a logical address : "); scanf("%d", &logicalAddress);
+// Calculate the page number and offset
+pageNumber = logicalAddress / pageSize; // Page number is the logical address divided by page size
+offset = logicalAddress % pageSize;	// Offset is the remainder
+// Check if the page number is within bounds if (pageNumber >= numberOfPages) {
+printf("Error: Invalid logical address, page number out of range.\n"); return 1;
+}
+// Get the corresponding frame number from the page table frameNumber = pageTable[pageNumber];
+ 
+// Calculate the physical address
+physicalAddress = frameNumber * pageSize + offset;
+// Display the results
+printf("\nLogical Address: %d\n", logicalAddress); printf("Page Number: %d\n", pageNumber); printf("Offset: %d\n", offset);
+printf("Frame Number: %d\n", frameNumber); printf("Physical Address: %d\n", physicalAddress);
+return 0;
+}
